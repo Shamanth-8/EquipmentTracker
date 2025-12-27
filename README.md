@@ -128,7 +128,7 @@ tracker/
 │   └── index.html
 └── README.md
 ```
+how the project looks --
 
-## License
 
-MIT
+<img width="1885" height="919" alt="image" src="https://github.com/user-attachments/assets/04f09aa5-4d4c-430d-8282-d6cac754a6c4" />
