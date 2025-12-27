@@ -18,6 +18,14 @@ A full-stack CRUD application for managing equipment, built with React, Node.js/
 - **Database**: SQLite (using sql.js)
 - **Styling**: Vanilla CSS
 
+## Database
+
+The application uses SQLite for data storage:
+- **Database file**: `backend/database/equipment.db`
+- **Library**: sql.js for in-memory SQLite with file persistence
+- **Schema**: Equipment table with auto-incrementing ID and timestamps
+- **Persistence**: Data is automatically saved to file after any changes
+
 ## How to Run Locally
 
 ### Prerequisites
@@ -37,7 +45,7 @@ A full-stack CRUD application for managing equipment, built with React, Node.js/
    ```bash
    cd backend
    npm install
-   npm start
+   npm run dev
    ```
    The API will run on http://localhost:5000
 
@@ -50,6 +58,8 @@ A full-stack CRUD application for managing equipment, built with React, Node.js/
    The app will run on http://localhost:5173
 
 4. **Open your browser** and navigate to http://localhost:5173
+
+**Important**: Both backend and frontend must be running simultaneously for the application to work. The frontend communicates with the backend API to access the SQLite database.
 
 ## API Endpoints
 
