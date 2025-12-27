@@ -1,6 +1,6 @@
 import './EquipmentTable.css';
 
-function EquipmentTable({ equipment, onEdit, onDelete, isLoading }) {
+function EquipmentTable({ equipment, onEdit, onDelete, isLoading, searchTerm }) {
     const formatDate = (dateString) => {
         if (!dateString) return '-';
         const date = new Date(dateString);
@@ -31,7 +31,12 @@ function EquipmentTable({ equipment, onEdit, onDelete, isLoading }) {
     if (equipment.length === 0) {
         return (
             <div className="empty-state">
-                <p>No equipment found. Add your first equipment to get started!</p>
+                <p>
+                    {searchTerm 
+                        ? `No equipment found matching "${searchTerm}". Try a different search term.`
+                        : 'No equipment found. Add your first equipment to get started!'
+                    }
+                </p>
             </div>
         );
     }

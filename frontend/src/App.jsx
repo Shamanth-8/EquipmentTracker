@@ -11,6 +11,8 @@ import './App.css';
 
 function App() {
   const [equipment, setEquipment] = useState([]);
+  const [filteredEquipment, setFilteredEquipment] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -22,18 +24,37 @@ function App() {
     fetchEquipment();
   }, []);
 
+  // Filter equipment based on search term
+  useEffect(() => {
+    if (searchTerm.trim() === '') {
+      setFilteredEquipment(equipment);
+    } else {
+      const filtered = equipment.filter(item => 
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.status.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredEquipment(filtered);
+    }
+  }, [searchTerm, equipment]);
+
   const fetchEquipment = async () => {
     try {
       setIsLoading(true);
       setError(null);
       const data = await getAllEquipment();
       setEquipment(data);
+      setFilteredEquipment(data);
     } catch (err) {
       setError('Failed to load equipment. Please make sure the server is running.');
       console.error('Error fetching equipment:', err);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
   };
 
   const handleAddClick = () => {
@@ -109,11 +130,27 @@ function App() {
           </div>
         )}
 
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search equipment by name, type, or status..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+            className="search-input"
+          />
+          {searchTerm && (
+            <div className="search-results">
+              Found {filteredEquipment.length} of {equipment.length} items
+            </div>
+          )}
+        </div>
+
         <EquipmentTable
-          equipment={equipment}
+          equipment={filteredEquipment}
           onEdit={handleEditClick}
           onDelete={handleDelete}
           isLoading={isLoading}
+          searchTerm={searchTerm}
         />
       </main>
 
